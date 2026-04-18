@@ -1,0 +1,16 @@
+$panel-radius: 0.75rem;
+$panel-bg: #f8f3ef;
+$panel-shadow: 0 0 0 rgba(15, 23, 42, 0);
+
+// TODO: change $panel-radius to 1.5rem
+// TODO: change $panel-bg to #fff7ed
+// TODO: change $panel-shadow to 0 18px 32px rgba(15, 23, 42, 0.12)
+
+@mixin elevated-panel() {
+  // TODO: add border-radius using $panel-radius
+  // TODO: add background using $panel-bg
+  // TODO: add box-shadow using $panel-shadow
+  border-radius: $panel-radius;
+  background: $panel-bg;
+  box-shadow: $panel-shadow;
+}

@@ -1,0 +1,16 @@
+.modal-overlay {
+  position: static;
+  inset: auto;
+  background: rgba(15, 23, 42, 0.1);
+  z-index: 1;
+}
+
+.modal-content {
+  position: static;
+  z-index: 2;
+}
+
+/* TODO: overlay should be fixed and cover the viewport */
+/* TODO: overlay background should be rgba(15, 23, 42, 0.55) */
+/* TODO: overlay z-index should be 40 */
+/* TODO: content should be fixed and z-index 50 */

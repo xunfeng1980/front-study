@@ -1,0 +1,33 @@
+@use './tokens' as tokens;
+
+.profile-panel {
+  @include tokens.elevated-panel();
+  padding: 1rem;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+
+  // TODO: add `transition: transform 160ms ease, box-shadow 160ms ease;`
+
+  &__meta {
+    display: grid;
+    gap: 0.3rem;
+  }
+
+  &__meta p {
+    margin: 0;
+    color: #64748b;
+  }
+
+  &__cta {
+    border: 0;
+    border-radius: 999px;
+    padding: 0.7rem 1rem;
+    background: #0f766e;
+    color: #f8fafc;
+  }
+
+  // TODO: add `&:hover { transform: translateY(-4px); }`
+}

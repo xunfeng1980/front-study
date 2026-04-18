@@ -1,0 +1,12 @@
+@keyframes fade-up {
+  /* TODO: start from opacity 0 and translateY(12px) */
+  /* TODO: end at opacity 1 and translateY(0) */
+}
+
+.card-enter-active {
+  /* TODO: use the fade-up animation for 240ms ease-out */
+}
+
+.cta-button:hover {
+  /* TODO: move the button up a little on hover */
+}

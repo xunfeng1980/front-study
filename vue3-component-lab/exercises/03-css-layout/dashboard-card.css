@@ -1,0 +1,20 @@
+.dashboard-grid {
+  /* TODO: turn this container into a 3-column grid */
+}
+
+.dashboard-card {
+  padding: 1rem;
+  border-radius: 1rem;
+  background: #ffffff;
+  border: 1px solid rgba(122, 97, 80, 0.12);
+}
+
+.dashboard-card--active {
+  /* TODO: make the active card lift up a little */
+}
+
+@media (max-width: 720px) {
+  .dashboard-grid {
+    /* TODO: collapse the grid to one column on small screens */
+  }
+}

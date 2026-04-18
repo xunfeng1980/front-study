@@ -1,0 +1,18 @@
+.dashboard-layout {
+  display: block;
+  grid-template-columns: none;
+  gap: 0;
+}
+
+.dashboard-layout__sidebar {
+  width: 100%;
+}
+
+.dashboard-layout__content {
+  min-width: auto;
+}
+
+/* TODO: change this to a two-column grid */
+/* TODO: sidebar should be 18rem wide */
+/* TODO: content should use minmax(0, 1fr) */
+/* TODO: gap should be 1rem */

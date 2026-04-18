@@ -1,0 +1,48 @@
+{
+  "name": "vue3-component-lab",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc -b && vite build",
+    "preview": "vite preview",
+    "realtime:server": "node scripts/realtime-server.mjs",
+    "collab:server": "HOST=127.0.0.1 PORT=1234 y-websocket",
+    "dev:realtime": "concurrently -k -n vite,realtime,yjs -c green,cyan,magenta \"pnpm dev\" \"pnpm realtime:server\" \"pnpm collab:server\"",
+    "learn": "node scripts/vue-lings.mjs learn",
+    "check": "node scripts/vue-lings.mjs check",
+    "clue": "node scripts/vue-lings.mjs clue",
+    "hint": "node scripts/vue-lings.mjs hint",
+    "next": "node scripts/vue-lings.mjs next",
+    "learn:status": "node scripts/vue-lings.mjs status",
+    "learn:reset": "node scripts/vue-lings.mjs reset",
+    "ui:test": "playwright test",
+    "ui:test:docker": "docker build -f Dockerfile.ui-tests -t vue3-component-lab-ui . && docker run --rm -p 4173:4173 vue3-component-lab-ui",
+    "test:unit": "vitest run"
+  },
+  "dependencies": {
+    "@y/websocket-server": "^0.1.5",
+    "pinia": "^3.0.4",
+    "reka-ui": "^2.9.6",
+    "vue": "^3.5.32",
+    "vue-router": "^5.0.4",
+    "ws": "^8.20.0",
+    "y-websocket": "^3.0.0",
+    "yjs": "^13.6.30"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.59.1",
+    "@tailwindcss/vite": "^4.2.2",
+    "@types/node": "^24.12.2",
+    "@vitejs/plugin-vue": "^6.0.5",
+    "@vue/tsconfig": "^0.9.1",
+    "concurrently": "^9.2.1",
+    "sass": "^1.99.0",
+    "tailwindcss": "^4.2.2",
+    "typescript": "~6.0.2",
+    "vite": "^8.0.4",
+    "vitest": "^4.1.4",
+    "vue-tsc": "^3.2.6"
+  }
+}

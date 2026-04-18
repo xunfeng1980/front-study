@@ -1,0 +1,20 @@
+.form-row {
+  display: block;
+  gap: 0;
+  align-items: stretch;
+}
+
+.form-row label {
+  display: block;
+  width: auto;
+}
+
+.form-row input {
+  width: auto;
+}
+
+/* TODO: make .form-row use flex */
+/* TODO: align items to center */
+/* TODO: add 0.75rem gap */
+/* TODO: make label width 7rem */
+/* TODO: make input flex: 1 */

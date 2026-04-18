@@ -1,0 +1,10 @@
+.hover-card {
+  transform: none;
+}
+
+.hover-card:hover {
+  transform: none;
+}
+
+/* TODO: add transition for transform 160ms ease and box-shadow 160ms ease */
+/* TODO: on hover translateY(-4px) */
