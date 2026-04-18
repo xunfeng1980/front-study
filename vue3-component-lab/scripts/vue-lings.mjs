@@ -8,7 +8,7 @@ const rootDir = process.cwd()
 const stateDir = path.join(os.homedir(), '.vue')
 const progressFile = path.join(stateDir, 'vue-lings-progress.json')
 const legacyProgressFile = path.join(rootDir, '.vue-lings-progress.json')
-const progressProjectKey = rootDir
+let progressProjectKey = rootDir
 
 const exerciseCatalog = [
   regexExercise({
@@ -2430,7 +2430,7 @@ const trackPhaseMap = {
   '协同编辑（Yjs）': '阶段 12：实时通信与协同',
 }
 
-const exercises = exerciseCatalog
+const allExercises = exerciseCatalog
   .map((exercise, index) => ({ ...exercise, __index: index }))
   .sort((left, right) => {
     const leftPhase = phaseOrder.indexOf(trackPhaseMap[left.track] ?? phaseOrder[phaseOrder.length - 1])
@@ -2451,6 +2451,62 @@ const exercises = exerciseCatalog
   })
   .map(({ __index, ...exercise }) => exercise)
 
+const liteExerciseSlugs = [
+  'js-01-destructure-profile',
+  'js-02-filter-done',
+  'js-03-map-titles',
+  'js-05-merge-filters',
+  'js-06-primary-email',
+  'ts-02-pluck',
+  'ts-03-format-result',
+  'css-01-dashboard-grid',
+  'css-03-fix-dashboard-grid',
+  'css-04-fix-form-alignment',
+  'css-07-fix-modal-layer',
+  'tailwind-01-card-classes',
+  'components-01-user-badge',
+  'components-02-section-shell',
+  'dataflow-01-filter-panel',
+  'lifecycle-01-basic-hooks',
+  'state-01-local-panel',
+  'state-02-pinia-store',
+  'forms-02-validate-profile-form',
+  'async-01-load-users',
+  'errors-01-async-view',
+  'routing-02-build-location',
+  'reka-01-select',
+  'shadcn-04-dialog',
+  'nuxt-03-page',
+  'browser-01-build-json-request',
+  'testing-02-load-users-spec',
+  'auth-03-attach-bearer',
+  'realtime-02-reduce-sse-stream',
+  'collab-02-create-y-todo-record',
+]
+
+const liteSlugSet = new Set(liteExerciseSlugs)
+
+const profiles = {
+  full: {
+    id: 'full',
+    title: '完整题库',
+    description: '完整 102 题系统路线。',
+    exercises: allExercises,
+  },
+  lite: {
+    id: 'lite',
+    title: '高价值 30 题',
+    description: '只保留最值得先做的 30 题，适合先打通核心链路。',
+    exercises: allExercises.filter((exercise) => liteSlugSet.has(exercise.slug)),
+  },
+}
+
+const profileArg = process.argv[2]
+const activeProfile =
+  profileArg && Object.hasOwn(profiles, profileArg)
+    ? profiles[profileArg]
+    : profiles.full
+const exercises = activeProfile.exercises
 const trackTotals = exercises.reduce((accumulator, exercise) => {
   accumulator[exercise.track] = (accumulator[exercise.track] ?? 0) + 1
   return accumulator
@@ -2534,6 +2590,12 @@ function loadProgress() {
     return normalizeProgress(savedProject)
   }
 
+  if (activeProfile.id === 'full' && state.projects[rootDir]) {
+    const migrated = normalizeProgress(state.projects[rootDir])
+    saveProgress(migrated)
+    return migrated
+  }
+
   if (fs.existsSync(legacyProgressFile)) {
     const migrated = normalizeProgress(JSON.parse(fs.readFileSync(legacyProgressFile, 'utf8')))
     saveProgress(migrated)
@@ -2574,6 +2636,7 @@ function printCurrentExercise() {
 
   const positionInTrack = getTrackPosition(index, exercise.track)
   console.log(`\nvue-lings`)
+  console.log(`当前模式: ${activeProfile.title}`)
   console.log(`当前进度: ${index + 1}/${exercises.length}`)
   console.log(`当前题目: ${exercise.title}`)
   console.log(`当前阶段: ${trackPhaseMap[exercise.track]}`)
@@ -2587,11 +2650,11 @@ function printCurrentExercise() {
   }
   console.log(``)
   console.log(`完成后运行:`)
-  console.log(`- pnpm check`)
-  console.log(`- pnpm clue`)
-  console.log(`- pnpm hint`)
+  console.log(`- ${getCommandLabel('check')}`)
+  console.log(`- ${getCommandLabel('clue')}`)
+  console.log(`- ${getCommandLabel('hint')}`)
   if (progress.completed.includes(index)) {
-    console.log(`- 这一题已经通过，可以执行 pnpm next`)
+    console.log(`- 这一题已经通过，可以执行 ${getCommandLabel('next')}`)
   }
   console.log(``)
 }
@@ -2793,6 +2856,7 @@ function printClue() {
   const exerciseHints = buildExerciseHints(exercise)
 
   console.log(`\nvue-lings clue`)
+  console.log(`当前模式: ${activeProfile.title}`)
   console.log(`当前题目: ${exercise.title}`)
   console.log(`当前进度: ${index + 1}/${exercises.length}`)
   console.log(`目标文件: ${exercise.file}`)
@@ -2819,8 +2883,8 @@ function printClue() {
   }
   console.log(``)
   console.log(`提示命令:`)
-  console.log(`- pnpm clue`)
-  console.log(`- pnpm hint`)
+  console.log(`- ${getCommandLabel('clue')}`)
+  console.log(`- ${getCommandLabel('hint')}`)
   console.log(``)
 }
 
@@ -2830,6 +2894,7 @@ function printStatus() {
   let currentTrack = ''
 
   console.log(`\nvue-lings status`)
+  console.log(`模式: ${activeProfile.title} (${activeProfile.description})`)
   for (const [index, exercise] of exercises.entries()) {
     const phase = trackPhaseMap[exercise.track]
 
@@ -2856,7 +2921,14 @@ function printStatus() {
   console.log(``)
 }
 
-const command = process.argv[2] ?? 'learn'
+function getCommandLabel(commandName) {
+  return activeProfile.id === 'lite' ? `pnpm lite:${commandName}` : `pnpm ${commandName}`
+}
+
+progressProjectKey = `${rootDir}::${activeProfile.id}`
+const command = activeProfile.id === 'full' && profileArg !== 'full'
+  ? process.argv[2] ?? 'learn'
+  : process.argv[3] ?? 'learn'
 
 await run(command)
 

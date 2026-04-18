@@ -41,6 +41,18 @@ pnpm learn:status
 pnpm learn:reset
 ```
 
+如果你只想做“最有价值的 30 题”，可以直接切到 `lite` 模式：
+
+```bash
+pnpm lite:learn
+pnpm lite:check
+pnpm lite:clue
+pnpm lite:hint
+pnpm lite:next
+pnpm lite:status
+pnpm lite:reset
+```
+
 工作流就是：
 
 1. 运行 `pnpm learn` 看当前题目
@@ -50,7 +62,7 @@ pnpm learn:reset
 5. 卡住时运行 `pnpm clue` 或 `pnpm hint`
 6. 通过后执行 `pnpm next`
 
-现在题库已经扩成 102 题，按主题分组，每个主题 2 到 8 题，难度递进：
+现在题库已经扩成 102 题；同时还提供了一条 `lite` 路线，只保留最值得先做的 30 题。
 
 - 组件拆分
 - 单向数据流

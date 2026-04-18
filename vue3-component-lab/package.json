@@ -17,6 +17,13 @@
     "next": "node scripts/vue-lings.mjs next",
     "learn:status": "node scripts/vue-lings.mjs status",
     "learn:reset": "node scripts/vue-lings.mjs reset",
+    "lite:learn": "node scripts/vue-lings.mjs lite learn",
+    "lite:check": "node scripts/vue-lings.mjs lite check",
+    "lite:clue": "node scripts/vue-lings.mjs lite clue",
+    "lite:hint": "node scripts/vue-lings.mjs lite hint",
+    "lite:next": "node scripts/vue-lings.mjs lite next",
+    "lite:status": "node scripts/vue-lings.mjs lite status",
+    "lite:reset": "node scripts/vue-lings.mjs lite reset",
     "ui:test": "playwright test",
     "ui:test:docker": "docker build -f Dockerfile.ui-tests -t vue3-component-lab-ui . && docker run --rm -p 4173:4173 vue3-component-lab-ui",
     "test:unit": "vitest run"
