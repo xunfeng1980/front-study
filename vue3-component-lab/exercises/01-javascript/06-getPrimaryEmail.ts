@@ -3,5 +3,5 @@ export function getPrimaryEmail(user: {
 }) {
   // TODO: use optional chaining + nullish coalescing
   // TODO: default to `unknown@example.com`
-  return 'TODO'
+  return  user.profile?.contact?.email
 }

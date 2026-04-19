@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import '../../exercises/03-css-layout/dashboard-card.css'
-import '../../exercises/04-css-animation/fade-up.css'
-import '../../exercises/05-sass/profile-panel.scss'
+import '../../exercises/03-css-layout/01-dashboard-card.css'
+import '../../exercises/04-css-animation/01-fade-up.css'
+import '../../exercises/05-sass/02-profile-panel.scss'
 import SectionShell from '../components/SectionShell.vue'
-import { buildCardClasses } from '../../exercises/06-tailwindcss/buildCardClasses'
-import { buildStatusBadgeClasses } from '../../exercises/06-tailwindcss/buildStatusBadgeClasses'
+import { buildCardClasses } from '../../exercises/06-tailwindcss/01-buildCardClasses'
+import { buildStatusBadgeClasses } from '../../exercises/06-tailwindcss/02-buildStatusBadgeClasses'
 
 const tailwindCardClasses = buildCardClasses(true)
 const tailwindBadgeClasses = buildStatusBadgeClasses('online')

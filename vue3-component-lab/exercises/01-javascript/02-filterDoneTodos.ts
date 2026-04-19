@@ -5,6 +5,5 @@ export type Todo = {
 }
 
 export function filterDoneTodos(todos: Todo[]) {
-  // TODO: return only done todos
-  return todos
+  return todos.filter(t => t.done)
 }

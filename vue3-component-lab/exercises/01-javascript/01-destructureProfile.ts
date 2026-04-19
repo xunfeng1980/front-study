@@ -5,5 +5,6 @@ export function destructureProfile(profile: {
 }) {
   // TODO: use object destructuring
   // TODO: return `${name}:${role}:${tasks}`
-  return 'TODO'
+  const { name, role, stats: { tasks } } = profile
+  return `${name}:${role}:${tasks}`
 }

@@ -1,4 +1,4 @@
-@use './tokens' as tokens;
+@use './01-tokens' as tokens;
 
 .profile-panel {
   @include tokens.elevated-panel();

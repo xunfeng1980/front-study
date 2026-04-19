@@ -33,9 +33,11 @@ pnpm build
 
 ```bash
 pnpm learn
+pnpm learn:once
 pnpm check
 pnpm clue
 pnpm hint
+pnpm ai:hint
 pnpm next
 pnpm learn:status
 pnpm learn:reset
@@ -45,24 +47,32 @@ pnpm learn:reset
 
 ```bash
 pnpm lite:learn
+pnpm lite:learn:once
 pnpm lite:check
 pnpm lite:clue
 pnpm lite:hint
+pnpm lite:ai:hint
 pnpm lite:next
 pnpm lite:status
 pnpm lite:reset
 ```
 
-工作流就是：
+工作流现在分两种：
 
-1. 运行 `pnpm learn` 看当前题目
-2. 打开它指定的练习文件
-3. 把里面的 `TODO` 做完
-4. 运行 `pnpm check`
-5. 卡住时运行 `pnpm clue` 或 `pnpm hint`
-6. 通过后执行 `pnpm next`
+1. 常驻模式：运行 `pnpm learn`
+2. 它会持续监听当前题目文件，保存后自动 `check`
+3. 如果通过，会自动进入下一题，并自动弹出下一题的 `clue`
+4. 如果你只想看当前题一次，用 `pnpm learn:once`
+5. 卡住时运行 `pnpm clue`、`pnpm hint` 或 `pnpm ai:hint`
 
-现在题库已经扩成 102 题；同时还提供了一条 `lite` 路线，只保留最值得先做的 30 题。
+现在题库已经扩成 185 题；同时还提供了一条 `lite` 路线，只保留最值得先做的 30 题。
+
+补充说明：
+
+- 练习文件里的 `TODO:` 注释现在可以保留，不会因为没删注释而判失败
+- 自动判题看的是代码行为或匹配规则，不是看你有没有删掉提示注释
+- 判题失败时默认只显示最关键的 1-2 条错误
+- `pnpm ai:hint` 会读取当前题目、当前代码和当前失败点，给出思路提示和更优写法建议
 
 - 组件拆分
 - 单向数据流
@@ -86,8 +96,19 @@ pnpm lite:reset
 - 可访问性
 - 浏览器存储
 - 文件上传
+- Node.js
 - SSE / WebSocket
 - 协同编辑（Yjs）
+- 数据层
+- 安全
+- 观测
+- 修复与重构
+- Vue Query / TanStack Query
+- 设计系统
+- 复杂交互
+- 阶段 checkpoint
+- integration challenge
+- capstone project
 
 你不需要自己决定先学什么，直接跑：
 
@@ -113,9 +134,9 @@ pnpm next
 
 ## 推荐挑战顺序
 
-现在题链已经按“从简单到复杂、从单个概念到组件集成”重排成 6 个阶段：
+现在题链已经按“从简单到复杂、从单个概念到组件集成”重排成 20 个阶段：
 
-1. `JavaScript / TypeScript` 基础
+1. `JavaScript / TypeScript / Node.js` 基础
 2. `CSS / Sass / Tailwind` 样式基础
 3. Vue 核心概念
 4. 组件生态：`Reka UI` -> `shadcn/vue`
@@ -127,10 +148,18 @@ pnpm next
 10. Nuxt SSR 与后台实战
 11. DOM / A11y / 存储 / 上传
 12. 实时通信与协同
+13. 高级前端：数据层与安全
+14. 高级前端：观测与修复重构
+15. 高级前端：Vue Query、设计系统、复杂交互
+16. 集成挑战：阶段 1-4
+17. 集成挑战：阶段 5-8
+18. 集成挑战：阶段 9-12
+19. 集成挑战：阶段 13-15
+20. 项目实战与 Capstone
 
 也就是说，默认第一题现在是：
 
-- `JavaScript 1/7：对象解构`
+- `JavaScript 1/16：对象解构`
 
 如果你想严格按这条新顺序从头开始，可以运行：
 
@@ -150,6 +179,17 @@ pnpm learn
 - Reka UI
 - JavaScript
 - TypeScript
+- Node.js
+- 数据层
+- 安全
+- 观测
+- 修复与重构
+- Vue Query / TanStack Query
+- 设计系统
+- 复杂交互
+- Checkpoint
+- Integration Challenge
+- Capstone
 
 现在 `pnpm learn:status` 里会继续往后看到这些题。
 
@@ -163,6 +203,12 @@ pnpm learn
   包括 `Composables`、`DOM 与事件`、`可访问性`、`浏览器存储`、`文件上传`
 - 继续补上了 AI 和协同场景常见的实时通信能力
   包括 `SSE`、`WebSocket`、`Yjs` 协同 Todo
+- 再往上补了一层更接近高级前端的系统能力
+  包括 `数据层`、`安全`、`观测`、`修复与重构`
+- 再细化了一层更贴近高级前端日常工作的专题
+  包括真实的 `Vue Query / TanStack Query` case、`设计系统` 和 `复杂交互`
+- 最后补上了真正的学习闭环
+  包括每阶段的 `checkpoint`、跨阶段的 `integration challenge`、以及 2 个最终 `capstone project`
 
 ## Full Stack 第二阶段
 
