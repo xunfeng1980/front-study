@@ -4535,15 +4535,52 @@ function normalizeProgress(rawProgress) {
   }
 }
 
+function parseJsonWithTrailingBraceRecovery(text) {
+  const attempts = [text]
+  let trimmed = text.trimEnd()
+
+  while (trimmed.endsWith('}')) {
+    trimmed = trimmed.slice(0, -1).trimEnd()
+    if (!trimmed) {
+      break
+    }
+    attempts.push(trimmed)
+  }
+
+  let lastError = null
+
+  for (const attempt of attempts) {
+    try {
+      return JSON.parse(attempt)
+    } catch (error) {
+      lastError = error
+    }
+  }
+
+  throw lastError
+}
+
 function loadStateFile() {
   if (!fs.existsSync(progressFile)) {
     return { version: 1, projects: {} }
   }
 
-  const parsed = JSON.parse(fs.readFileSync(progressFile, 'utf8'))
-  return {
+  const raw = fs.readFileSync(progressFile, 'utf8')
+  const parsed = parseJsonWithTrailingBraceRecovery(raw)
+  const normalized = {
     version: parsed.version ?? 1,
     projects: parsed.projects && typeof parsed.projects === 'object' ? parsed.projects : {},
+  }
+
+  const normalizedText = JSON.stringify(normalized, null, 2) + '\n'
+  if (raw !== normalizedText) {
+    ensureStateDir()
+    fs.writeFileSync(progressFile, normalizedText)
+  }
+
+  return {
+    version: normalized.version,
+    projects: normalized.projects,
   }
 }
 
