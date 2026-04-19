@@ -4355,7 +4355,7 @@ const allExercises = exerciseCatalog
   })
   .map(({ __index, ...exercise }) => exercise)
 
-const liteExerciseSlugs = [
+const liteCoreExerciseSlugs = [
   'js-01-destructure-profile',
   'js-02-filter-done',
   'js-03-map-titles',
@@ -4388,21 +4388,58 @@ const liteExerciseSlugs = [
   'collab-02-create-y-todo-record',
 ]
 
-const liteSlugSet = new Set(liteExerciseSlugs)
+const liteSystemExerciseSlugs = [
+  ...liteCoreExerciseSlugs,
+  'checkpoint-01-foundation',
+  'checkpoint-03-vue-core',
+  'checkpoint-05-nuxt',
+  'checkpoint-10-ssr-admin',
+  'checkpoint-12-realtime',
+  'checkpoint-13-data-security',
+  'checkpoint-15-advanced-frontend',
+  'data-layer-01-normalize-users',
+  'data-layer-04-optimistic-todo',
+  'vue-query-01-list-query',
+  'vue-query-05-optimistic-update',
+  'design-03-button-variants',
+  'complex-01-reorder-drag',
+  'integration-02-nuxt-quality',
+  'integration-04-advanced-systems',
+  'admin-01-issue-filters',
+  'capstone-01-admin-dashboard',
+  'capstone-02-collab-todo',
+]
+
+const liteCoreSlugSet = new Set(liteCoreExerciseSlugs)
+const liteSystemSlugSet = new Set(liteSystemExerciseSlugs)
+
+const liteCoreProfile = {
+  id: 'lite-core',
+  commandPrefix: 'lite-core',
+  title: '高价值 30 题',
+  description: '只保留最值得先做的 30 题，适合先打通核心链路。',
+  exercises: allExercises.filter((exercise) => liteCoreSlugSet.has(exercise.slug)),
+}
+
+const liteSystemProfile = {
+  id: 'lite-system',
+  commandPrefix: 'lite-system',
+  title: '系统化精简版 48 题',
+  description: '在核心链路上补入少量 checkpoint、integration 和 capstone，适合想系统化但不想一口气做完整题库。',
+  exercises: allExercises.filter((exercise) => liteSystemSlugSet.has(exercise.slug)),
+}
 
 const profiles = {
   full: {
     id: 'full',
+    commandPrefix: 'full',
     title: '完整题库',
     description: '完整 185 题系统路线。',
     exercises: allExercises,
   },
-  lite: {
-    id: 'lite',
-    title: '高价值 30 题',
-    description: '只保留最值得先做的 30 题，适合先打通核心链路。',
-    exercises: allExercises.filter((exercise) => liteSlugSet.has(exercise.slug)),
-  },
+  lite: liteCoreProfile,
+  'lite-core': liteCoreProfile,
+  'lite-system': liteSystemProfile,
 }
 
 const profileArg = process.argv[2]
@@ -5136,16 +5173,18 @@ async function watchCurrentExerciseLoop() {
 }
 
 function getCommandLabel(commandName) {
-  const commandAliasMap = {
-    'ai-hint': activeProfile.id === 'lite' ? 'pnpm lite:ai:hint' : 'pnpm ai:hint',
-  }
+  const profilePrefix = activeProfile.commandPrefix ?? activeProfile.id
+  const commandAliasMap = {}
 
   if (commandAliasMap[commandName]) {
     return commandAliasMap[commandName]
   }
 
-  if (activeProfile.id === 'lite') {
-    return `pnpm lite:${commandName}`
+  if (profilePrefix !== 'full') {
+    if (commandName === 'ai-hint') {
+      return `pnpm ${profilePrefix}:ai:hint`
+    }
+    return `pnpm ${profilePrefix}:${commandName}`
   }
 
   if (commandName.includes(':')) {

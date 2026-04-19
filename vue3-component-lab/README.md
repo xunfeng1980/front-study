@@ -43,7 +43,35 @@ pnpm learn:status
 pnpm learn:reset
 ```
 
-如果你只想做“最有价值的 30 题”，可以直接切到 `lite` 模式：
+如果你只想先打通核心链路，可以直接切到 `lite-core`：
+
+```bash
+pnpm lite-core:learn
+pnpm lite-core:learn:once
+pnpm lite-core:check
+pnpm lite-core:clue
+pnpm lite-core:hint
+pnpm lite-core:ai:hint
+pnpm lite-core:next
+pnpm lite-core:status
+pnpm lite-core:reset
+```
+
+如果你想走“系统化精简版”，可以用 `lite-system`：
+
+```bash
+pnpm lite-system:learn
+pnpm lite-system:learn:once
+pnpm lite-system:check
+pnpm lite-system:clue
+pnpm lite-system:hint
+pnpm lite-system:ai:hint
+pnpm lite-system:next
+pnpm lite-system:status
+pnpm lite-system:reset
+```
+
+兼容起见，原来的 `lite` 仍然可用，它等价于 `lite-core`：
 
 ```bash
 pnpm lite:learn
@@ -65,7 +93,10 @@ pnpm lite:reset
 4. 如果你只想看当前题一次，用 `pnpm learn:once`
 5. 卡住时运行 `pnpm clue`、`pnpm hint` 或 `pnpm ai:hint`
 
-现在题库已经扩成 185 题；同时还提供了一条 `lite` 路线，只保留最值得先做的 30 题。
+现在题库已经扩成 185 题；同时提供两条精简路线：
+
+- `lite-core`：高价值 30 题，适合先打通核心开发链路
+- `lite-system`：系统化精简版 48 题，在核心题上补入 checkpoint、integration、capstone
 
 补充说明：
 
@@ -190,6 +221,8 @@ pnpm learn
 - Checkpoint
 - Integration Challenge
 - Capstone
+- lite-core
+- lite-system
 
 现在 `pnpm learn:status` 里会继续往后看到这些题。
 
